@@ -12,7 +12,7 @@ const LocationInput = ({ label, placeholder, icon: Icon, iconColor, value, onCha
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const containerRef = useRef(null);
   const timerRef = useRef(null);
-  const GOOGLE_API_KEY = "AIzaSyAJDiuZoC1nS3JmzV6DYg6LjvPFFCxeg6Q"; // ✅ Real Key Integrated!
+  const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   const fetchSuggestions = useCallback(async (query) => {
     if (query.length < 3) { setSuggestions([]); return; }
@@ -131,7 +131,7 @@ const RiderDashboard = () => {
         const coords = { lat, lng };
         setPickupCoords(coords);
         try {
-          const GOOGLE_API_KEY = "AIzaSyAJDiuZoC1nS3JmzV6DYg6LjvPFFCxeg6Q";
+          const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
           const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}&region=in`);
           const data = await res.json();
           if (data.results?.[0]) setPickupLocation(data.results[0].formatted_address);
@@ -153,7 +153,7 @@ const RiderDashboard = () => {
 
   const handleMapClick = useCallback(async (coords) => {
     try {
-      const GOOGLE_API_KEY = "AIzaSyAJDiuZoC1nS3JmzV6DYg6LjvPFFCxeg6Q";
+      const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
       const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${GOOGLE_API_KEY}&region=in`);
       const data = await res.json();
       const address = data.results?.[0]?.formatted_address || "Custom Location";

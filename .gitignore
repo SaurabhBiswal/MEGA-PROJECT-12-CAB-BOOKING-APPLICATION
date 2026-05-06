@@ -1,20 +1,42 @@
-# Backend
-backend/target/
-backend/.mvn/
-backend/*.log
+# Dependencies
+node_modules
+.pnp
+.pnp.js
 
-# Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.env
-frontend/.env.local
+# Testing
+coverage
 
-# IDE
-.idea/
-*.iml
-.vscode/
-*.class
+# Production
+dist
 
-# OS
+# Misc
 .DS_Store
-Thumbs.db
+*.local
+
+# ENVIRONMENT VARIABLES (CRITICAL)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor folders
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Java specific
+target/
+!.mvn/wrapper/maven-wrapper.jar
+build/
+.gradle/
+bin/
