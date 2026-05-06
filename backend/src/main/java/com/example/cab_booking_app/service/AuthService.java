@@ -51,6 +51,8 @@ public class AuthService {
                     .vehicleModel(request.getVehicleModel())
                     .vehicleColor(request.getVehicleColor())
                     .licenseNumber(request.getLicenseNumber())
+                    .licenseImageUrl(request.getLicenseImageUrl())
+                    .selfieImageUrl(request.getSelfieImageUrl())
                     .available(true)
                     .build();
             driverRepository.save(driver);

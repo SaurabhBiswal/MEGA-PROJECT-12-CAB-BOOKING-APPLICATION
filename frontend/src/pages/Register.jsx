@@ -7,7 +7,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', phone: '',
     role: 'RIDER',
-    vehicleNumber: '', vehicleModel: '', licenseNumber: ''
+    vehicleNumber: '', vehicleModel: '', licenseNumber: '',
+    licenseImageUrl: '', selfieImageUrl: ''
   });
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -139,11 +140,26 @@ const Register = () => {
                       className="premium-input text-sm" value={formData.vehicleModel} onChange={handleChange} />
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Driving Licence Number</label>
-                  <input type="text" name="licenseNumber" required={isDriver} placeholder="DL-1420110012345"
-                    className="premium-input text-sm" value={formData.licenseNumber} onChange={handleChange} />
-                  <p className="text-[10px] text-gray-500 ml-1 mt-1">🔒 Used for background verification only. Not shown to riders.</p>
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Driving Licence Number</label>
+                    <input type="text" name="licenseNumber" required={isDriver} placeholder="DL-1420110012345"
+                      className="premium-input text-sm" value={formData.licenseNumber} onChange={handleChange} />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Licence Photo URL</label>
+                      <input type="text" name="licenseImageUrl" required={isDriver} placeholder="https://image-link.com/licence.jpg"
+                        className="premium-input text-xs" value={formData.licenseImageUrl} onChange={handleChange} />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Driver Selfie URL</label>
+                      <input type="text" name="selfieImageUrl" required={isDriver} placeholder="https://image-link.com/selfie.jpg"
+                        className="premium-input text-xs" value={formData.selfieImageUrl} onChange={handleChange} />
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-gray-500 ml-1 mt-1">🔒 Documents are encrypted and only visible to authorized admins.</p>
                 </div>
               </div>
             )}

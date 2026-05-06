@@ -30,4 +30,6 @@ public class RegisterRequest {
     private String vehicleModel;
     private String vehicleColor;
     private String licenseNumber;
+    private String licenseImageUrl;
+    private String selfieImageUrl;
 }

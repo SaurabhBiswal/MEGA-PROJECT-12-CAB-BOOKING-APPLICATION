@@ -31,6 +31,12 @@ public class Driver {
     @Column(name = "license_number", nullable = false)
     private String licenseNumber;
 
+    @Column(name = "license_image_url")
+    private String licenseImageUrl;
+
+    @Column(name = "selfie_image_url")
+    private String selfieImageUrl;
+
     @Builder.Default
     @Column(name = "is_available")
     private boolean available = true;
