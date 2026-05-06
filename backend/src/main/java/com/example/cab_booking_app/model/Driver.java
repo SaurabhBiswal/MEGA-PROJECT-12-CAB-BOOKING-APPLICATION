@@ -35,6 +35,10 @@ public class Driver {
     @Column(name = "is_available")
     private boolean available = true;
 
+    @Builder.Default
+    @Column(name = "verified")
+    private boolean verified = false; // Admin must approve before driver can accept rides
+
     // Current location (updated in real-time)
     @Column(name = "current_lat")
     private Double currentLat;

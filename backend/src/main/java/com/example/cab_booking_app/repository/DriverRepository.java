@@ -14,6 +14,8 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     Optional<Driver> findByUserId(Long userId);
     List<Driver> findByAvailableTrue();
 
-    @Query("SELECT d FROM Driver d WHERE d.available = true AND d.user.enabled = true")
+    @Query("SELECT d FROM Driver d WHERE d.available = true AND d.user.enabled = true AND d.verified = true")
     List<Driver> findAllAvailableDrivers();
+
+    List<Driver> findByVerified(boolean verified);
 }

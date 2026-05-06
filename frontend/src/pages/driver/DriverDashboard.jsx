@@ -82,6 +82,43 @@ const DriverDashboard = () => {
     </div>
   );
 
+  // ── NOT VERIFIED SCREEN ──────────────────────────────
+  if (stats && !stats.isVerified) {
+    return (
+      <div className="max-w-2xl mx-auto py-20 px-4 flex flex-col items-center text-center">
+        <div className="glass-card rounded-3xl p-12 border border-yellow-500/20 shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-yellow-500/5 pointer-events-none"></div>
+          <div className="relative z-10">
+            <div className="w-24 h-24 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+              <span className="text-5xl">⏳</span>
+            </div>
+            <h2 className="text-3xl font-black mb-3" style={{ color: 'var(--text-primary)' }}>Verification Pending</h2>
+            <p className="text-lg mb-6" style={{ color: 'var(--text-secondary)' }}>Your account is currently under review by our safety team.</p>
+            <div className="bg-black/20 rounded-2xl p-6 text-left space-y-3 mb-8">
+              <p className="font-bold text-yellow-400 text-sm uppercase tracking-widest mb-3">Verification Checklist</p>
+              {[
+                { done: true,  label: 'Account Created' },
+                { done: true,  label: 'Documents Submitted' },
+                { done: false, label: 'Background Check' },
+                { done: false, label: 'Admin Approval' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                    item.done ? 'bg-green-500 text-white' : 'border-2 border-gray-600 text-gray-600'
+                  }`}>
+                    {item.done ? '✓' : ''}
+                  </div>
+                  <span className={item.done ? 'text-gray-300' : 'text-gray-500'}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Typically takes 24–48 hours. You'll be notified once approved.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">
       

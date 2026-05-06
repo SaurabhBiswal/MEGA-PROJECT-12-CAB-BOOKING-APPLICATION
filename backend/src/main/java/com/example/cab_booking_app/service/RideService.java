@@ -91,6 +91,10 @@ public class RideService {
         Ride ride = rideRepository.findById(rideId)
                 .orElseThrow(() -> new RuntimeException("Ride not found"));
 
+        if (!driver.isVerified()) {
+            throw new RuntimeException("Your account is under review. Admin verification is pending.");
+        }
+
         if (ride.getStatus() != RideStatus.REQUESTED) {
             throw new RuntimeException("Ride is no longer available");
         }

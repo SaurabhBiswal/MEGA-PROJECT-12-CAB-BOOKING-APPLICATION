@@ -85,6 +85,7 @@ public class DriverController {
         return ResponseEntity.ok(Map.of(
                 "name", driverUser.getName(),
                 "isAvailable", driver.isAvailable(),
+                "isVerified", driver.isVerified(),
                 "totalRides", driver.getTotalRides(),
                 "totalEarnings", driver.getTotalEarnings(),
                 "avgRating", driver.getAvgRating(),

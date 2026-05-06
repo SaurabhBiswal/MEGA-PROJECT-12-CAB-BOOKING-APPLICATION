@@ -7,7 +7,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', phone: '',
     role: 'RIDER',
-    vehicleNumber: '', vehicleModel: ''
+    vehicleNumber: '', vehicleModel: '', licenseNumber: ''
   });
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -138,6 +138,12 @@ const Register = () => {
                     <input type="text" name="vehicleModel" required={isDriver} placeholder="Swift Dzire"
                       className="premium-input text-sm" value={formData.vehicleModel} onChange={handleChange} />
                   </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Driving Licence Number</label>
+                  <input type="text" name="licenseNumber" required={isDriver} placeholder="DL-1420110012345"
+                    className="premium-input text-sm" value={formData.licenseNumber} onChange={handleChange} />
+                  <p className="text-[10px] text-gray-500 ml-1 mt-1">🔒 Used for background verification only. Not shown to riders.</p>
                 </div>
               </div>
             )}

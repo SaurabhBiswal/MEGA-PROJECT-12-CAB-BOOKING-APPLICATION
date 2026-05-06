@@ -31,6 +31,31 @@ public class AdminController {
         return ResponseEntity.ok(driverRepository.findAll());
     }
 
+    @GetMapping("/drivers/pending")
+    public ResponseEntity<List<Driver>> getPendingDrivers() {
+        return ResponseEntity.ok(driverRepository.findByVerified(false));
+    }
+
+    @PutMapping("/drivers/{driverId}/verify")
+    public ResponseEntity<Map<String, Object>> verifyDriver(
+            @PathVariable Long driverId,
+            @RequestParam boolean approve) {
+        Driver driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+        driver.setVerified(approve);
+        // If rejected, disable the user account too
+        if (!approve) {
+            driver.getUser().setEnabled(false);
+            userRepository.save(driver.getUser());
+        }
+        driverRepository.save(driver);
+        return ResponseEntity.ok(Map.of(
+                "message", approve ? "Driver approved successfully" : "Driver rejected",
+                "driverId", driverId,
+                "verified", approve
+        ));
+    }
+
     @GetMapping("/rides")
     public ResponseEntity<List<Ride>> getAllRides() {
         return ResponseEntity.ok(rideRepository.findAll());
