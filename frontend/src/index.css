@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg-main: #0a0a0a;
+    --card-bg: rgba(20, 20, 20, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --accent: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+  }
+
+  body {
+    @apply text-gray-100 antialiased selection:bg-blue-500/30;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-main);
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .premium-input {
+    @apply w-full bg-black/40 border border-gray-700/50 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300;
+  }
+
+  .premium-btn {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3.5 px-6 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+  }
+}
+
+/* Map specific dark theme tweaks */
+.leaflet-container {
+  background: #111 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
