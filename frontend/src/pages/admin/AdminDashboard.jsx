@@ -26,6 +26,8 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
   const [selectedDocs, setSelectedDocs] = useState(null);
+  const [resolvingId, setResolvingId] = useState(null);
+  const [resolutionText, setResolutionText] = useState("");
 
   const fetchData = async () => {
     try {
@@ -65,6 +67,22 @@ const AdminDashboard = () => {
       setActionLoading(null);
     }
   };
+
+  const handleResolveSubmit = () => {
+    if(!resolutionText) return toast.error("Please enter resolution details");
+    setComplaints(prev => prev.map(c => c.id === resolvingId ? { ...c, status: 'RESOLVED', resolution: resolutionText } : c));
+    toast.success("Complaint resolved with details!");
+    setResolvingId(null);
+    setResolutionText("");
+  };
+
+  const handleDelete = (id) => {
+    setComplaints(prev => prev.filter(c => c.id !== id));
+    toast.success("Entry removed from system");
+  };
+
+  const pendingComplaints = complaints.filter(c => c.status === 'PENDING');
+  const overchargeCount = pendingComplaints.filter(c => c.subject.toLowerCase().includes('charge')).length;
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: TrendingUp },
@@ -196,12 +214,17 @@ const AdminDashboard = () => {
       {/* Support Tab */}
       {activeTab === 'support' && (
         <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="glass-card rounded-2xl p-6 border border-red-500/10 bg-red-500/5 mb-6">
-             <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-widest mb-1">
-               <AlertTriangle size={14} /> Urgent Attention
-             </div>
-             <p className="text-sm text-red-300/80">You have 2 unresolved complaints from riders regarding overcharging.</p>
-          </div>
+          {pendingComplaints.length > 0 && (
+            <div className="glass-card rounded-2xl p-6 border border-red-500/10 bg-red-500/5 mb-6 animate-pulse">
+               <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-widest mb-1">
+                 <AlertTriangle size={14} /> Urgent Attention
+               </div>
+               <p className="text-sm text-red-300/80">
+                 You have {pendingComplaints.length} unresolved {pendingComplaints.length === 1 ? 'complaint' : 'complaints'} 
+                 {overchargeCount > 0 ? ` including ${overchargeCount} regarding overcharging.` : '.'}
+               </p>
+            </div>
+          )}
           
           <div className="glass-card rounded-2xl overflow-hidden border" style={{ borderColor: 'var(--card-border)' }}>
              <table className="w-full text-left border-collapse">
@@ -231,7 +254,22 @@ const AdminDashboard = () => {
                       </td>
                       <td className="px-6 py-4 text-xs text-gray-500 font-medium">{c.date}</td>
                       <td className="px-6 py-4">
-                        <button className="text-blue-400 hover:text-blue-300 text-xs font-bold transition-colors">Resolve →</button>
+                        <div className="flex items-center gap-3">
+                           <button 
+                             onClick={() => setResolvingId(c.id)}
+                             disabled={c.status === 'RESOLVED'}
+                             className={`text-xs font-bold transition-colors ${c.status === 'RESOLVED' ? 'text-gray-600 cursor-not-allowed' : 'text-blue-400 hover:text-blue-300'}`}
+                           >
+                             {c.status === 'RESOLVED' ? 'Resolved' : 'Resolve →'}
+                           </button>
+                           <button 
+                             onClick={() => handleDelete(c.id)}
+                             className="p-1.5 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-600 hover:text-white transition-all border border-red-500/20"
+                             title="Remove Entry"
+                           >
+                             <XCircle size={14} />
+                           </button>
+                        </div>
                       </td>
                    </tr>
                  ))}
@@ -352,6 +390,29 @@ const AdminDashboard = () => {
                  >
                    APPROVE DRIVER ACCOUNT
                  </button>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* RESOLUTION MODAL */}
+      {resolvingId && (
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setResolvingId(null)}></div>
+           <div className="glass-card w-full max-w-md rounded-3xl p-8 relative z-10 border border-white/10 shadow-2xl animate-in zoom-in-95">
+              <h2 className="text-xl font-bold mb-4 text-white">Resolve Complaint</h2>
+              <p className="text-xs text-gray-400 mb-6 uppercase tracking-widest font-bold">Provide resolution details to close this case</p>
+              
+              <textarea 
+                className="premium-input w-full h-32 mb-6 resize-none"
+                placeholder="What action did you take? (e.g. Refunded ₹50, Warned driver...)"
+                value={resolutionText}
+                onChange={(e) => setResolutionText(e.target.value)}
+              ></textarea>
+
+              <div className="flex gap-4">
+                 <button onClick={() => setResolvingId(null)} className="flex-1 py-3 rounded-xl font-bold text-sm border border-white/10 text-gray-400 hover:bg-white/5 transition-all">Cancel</button>
+                 <button onClick={handleResolveSubmit} className="flex-[2] py-3 rounded-xl font-bold text-sm bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:scale-[1.02] transition-all">Submit Resolution</button>
               </div>
            </div>
         </div>

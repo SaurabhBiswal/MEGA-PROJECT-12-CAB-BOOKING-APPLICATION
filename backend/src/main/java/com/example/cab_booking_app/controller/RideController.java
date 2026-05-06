@@ -62,4 +62,11 @@ public class RideController {
         headers.setContentDispositionFormData("attachment", "receipt-ride-" + rideId + ".pdf");
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
+
+    @DeleteMapping("/{rideId}/cancel")
+    @PreAuthorize("hasRole('RIDER')")
+    public ResponseEntity<Void> cancelRide(@PathVariable Long rideId) {
+        rideService.cancelRide(rideId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -160,6 +160,32 @@ public class RideService {
         return saved;
     }
 
+    @Transactional
+    public void cancelRide(Long rideId) {
+        Ride ride = rideRepository.findById(rideId)
+                .orElseThrow(() -> new RuntimeException("Ride not found"));
+
+        if (ride.getStatus() != RideStatus.REQUESTED && ride.getStatus() != RideStatus.ACCEPTED) {
+            throw new RuntimeException("Cannot cancel ride in status: " + ride.getStatus());
+        }
+
+        ride.setStatus(RideStatus.CANCELLED);
+        if (ride.getDriver() != null) {
+            Driver driver = ride.getDriver();
+            driver.setAvailable(true);
+            driverRepository.save(driver);
+        }
+        rideRepository.save(ride);
+
+        messagingTemplate.convertAndSend("/topic/ride/" + rideId,
+                RideStatusUpdate.builder()
+                        .rideId(rideId)
+                        .status(RideStatus.CANCELLED)
+                        .message("Ride has been cancelled")
+                        .build()
+        );
+    }
+
     private String getStatusMessage(RideStatus status) {
         return switch (status) {
             case DRIVER_ARRIVED -> "Your driver has arrived!";
