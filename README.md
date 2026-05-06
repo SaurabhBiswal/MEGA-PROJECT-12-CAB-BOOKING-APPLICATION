@@ -2,9 +2,9 @@
 
 A production-ready, full-stack cab booking application built with **Java (Spring Boot)** and **React**. This platform features an "Uber-style" premium UI, high-precision location services, and a comprehensive administrative control panel.
 
-## 🌟 Key Features
+##  Key Features
 
-### 1. 🗺️ High-Precision Map Integration
+### 1. 🗺️High-Precision Map Integration
 - **Google Maps API:** Integrated for industry-standard location search, autocomplete, and reverse geocoding.
 - **Interactive Map Selection:** Users can move the map to select pickup/dropoff points with auto-address detection.
 - **Dark/Voyager Themes:** Premium map styles for a professional navigation feel.
@@ -47,4 +47,8 @@ A production-ready, full-stack cab booking application built with **Java (Spring
 3. Run `npm run dev`.
 
 ---
-Developed with ❤️ by [Your Name]
+Developed with ❤️ by SAURABH BISWAL 
+
+INCOMPOLETE NEEDS MORE WORK
+
+
