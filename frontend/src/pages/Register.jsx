@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Car, Mail, Lock, Phone, User, Truck, Shield, Sparkles } from 'lucide-react';
+import { Car, Mail, Lock, Phone, User, Truck, Sparkles } from 'lucide-react';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', phone: '',
     role: 'RIDER',
-    vehicleNumber: '', vehicleModel: '', vehicleColor: '', licenseNumber: ''
+    vehicleNumber: '', vehicleModel: ''
   });
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -124,12 +124,12 @@ const Register = () => {
             {isDriver && (
               <div className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-5 space-y-4 mt-2">
                 <div className="flex items-center gap-2 mb-2">
-                  <Shield size={14} className="text-blue-400" />
+                  <Truck size={14} className="text-blue-400" />
                   <p className="text-xs font-bold text-blue-400 uppercase tracking-widest">Vehicle Details</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Plate Number</label>
+                    <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Vehicle Number</label>
                     <input type="text" name="vehicleNumber" required={isDriver} placeholder="DL 01 AB 1234"
                       className="premium-input text-sm" value={formData.vehicleNumber} onChange={handleChange} />
                   </div>
@@ -137,18 +137,6 @@ const Register = () => {
                     <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Vehicle Model</label>
                     <input type="text" name="vehicleModel" required={isDriver} placeholder="Swift Dzire"
                       className="premium-input text-sm" value={formData.vehicleModel} onChange={handleChange} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">Vehicle Color</label>
-                    <input type="text" name="vehicleColor" placeholder="White"
-                      className="premium-input text-sm" value={formData.vehicleColor} onChange={handleChange} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="block text-[10px] font-bold tracking-widest text-gray-400 uppercase ml-1">License Number</label>
-                    <input type="text" name="licenseNumber" required={isDriver} placeholder="DL-1234567890"
-                      className="premium-input text-sm" value={formData.licenseNumber} onChange={handleChange} />
                   </div>
                 </div>
               </div>
