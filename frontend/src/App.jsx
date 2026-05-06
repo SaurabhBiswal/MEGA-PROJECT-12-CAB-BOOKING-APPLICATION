@@ -9,6 +9,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import PaymentPage from './pages/Payment';
 import History from './pages/History';
 import Navbar from './components/Navbar';
+import { ThemeProvider } from './context/ThemeContext';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useAuth();
@@ -38,9 +39,10 @@ const DefaultRedirect = () => {
 
 function App() {
   return (
-    <AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-grow container mx-auto px-4 py-8">
             <Routes>
@@ -97,7 +99,8 @@ function App() {
           <Toaster position="top-right" />
         </div>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
